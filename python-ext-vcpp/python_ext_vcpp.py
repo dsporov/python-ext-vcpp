@@ -2,6 +2,9 @@ from itertools import islice
 from random import random
 from time import perf_counter
 
+from superfastcode import fast_tanh
+from superfastcode2 import fast_tanh2
+
 COUNT = 2000000  # Change this value depending on the speed of your computer
 DATA = list(islice(iter(lambda: (random() - 0.5)*3.0, None), COUNT))
 
@@ -30,3 +33,5 @@ if __name__ == "__main__":
     print('Running benchmarks with COUNT = {}'.format(COUNT))
 
     test(lambda d: [tanh(x) for x in d], '[tanh(x) for x in d] (Python implementation)')
+    test(lambda d: [fast_tanh(x) for x in d], '[fast_tanh(x) for x in d] (CPython C++ extension)')
+    test(lambda d: [fast_tanh2(x) for x in d], '[fast_tanh2(x) for x in d] (PyBind11 C++ extension)')
